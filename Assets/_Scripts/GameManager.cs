@@ -10,6 +10,31 @@ public class GameManager : MonoBehaviour {
 
 	public static bool crossTurn = true;
 
+	enum CellState { empty, cross, nought }
+	CellState[] grid = new CellState[9];
+
+	int crossScore;
+	int noughtScore;
+
+	void Start()
+    {
+		for(int index = 0; index < grid.Length; index++)
+        {
+			grid[index] = CellState.empty;
+        }
+    }
+
+	public void UpdateCell(Vector2 gridPos)
+    {
+		CellState currentSymbol;
+        if (crossTurn) { currentSymbol = CellState.cross; }
+		else { currentSymbol = CellState.nought; }
+
+		int index = ((int)gridPos.y * 3) + (int)gridPos.x;
+		grid[index] = currentSymbol;
+		//print(gridPos + " / grid[" + index + "] is a " + currentSymbol);
+    }
+
 	public void SwitchTurn()
 	{
 		crossTurn = !crossTurn;
@@ -17,11 +42,23 @@ public class GameManager : MonoBehaviour {
 		noughtSymbol.SetActive(!noughtSymbol.activeSelf);
 	}
 
-	void Start () {
-		
-	}
-	
-	void Update () {
-		
-	}
+	public void WinCheck()
+    {
+		// currently only checks horizontally for a win
+		// NEEDS fixing and more efficiency
+		for (int index = 0; index < grid.Length - 2; index += 3)
+        {
+			if (grid[index] == grid[index + 1] && grid[index] == grid[index + 2])
+			{
+				if (grid[index] == CellState.cross)
+                {
+					print("cross wins!");
+                }
+				else if (grid[index] == CellState.nought)
+				{
+					print("nought wins!");
+				}
+            }
+        }
+    }
 }

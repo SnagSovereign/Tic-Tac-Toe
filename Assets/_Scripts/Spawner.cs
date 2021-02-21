@@ -34,7 +34,9 @@ public class Spawner : MonoBehaviour
         if (GameManager.crossTurn) { symbol = "cross"; }
         else { symbol = "nought"; }
 
-        Instantiate(Resources.Load<GameObject>(symbol), gridPos, transform.rotation);
+        Instantiate(Resources.Load<GameObject>(symbol), new Vector3(gridPos.x, gridPos.y, -0.5f), transform.rotation);
+        GM.UpdateCell(gridPos);
+        GM.WinCheck();
         GM.SwitchTurn();
     }
 }
