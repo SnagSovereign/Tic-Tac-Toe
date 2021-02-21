@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
 	public static bool crossTurn = true;
 
 	public void SwitchTurn()
-    {
+	{
 		crossTurn = !crossTurn;
 		crossSymbol.SetActive(!crossSymbol.activeSelf);
 		noughtSymbol.SetActive(!noughtSymbol.activeSelf);
