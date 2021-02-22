@@ -10,8 +10,7 @@ public class GameManager : MonoBehaviour {
 
 	public static bool crossTurn = true;
 
-	enum CellState { empty, cross, nought }
-	CellState[] grid = new CellState[9];
+	int [] grid = new int[9];
 
 	int crossScore;
 	int noughtScore;
@@ -20,19 +19,18 @@ public class GameManager : MonoBehaviour {
     {
 		for(int index = 0; index < grid.Length; index++)
         {
-			grid[index] = CellState.empty;
+			grid[index] = 0;
         }
     }
 
 	public void UpdateCell(Vector2 gridPos)
     {
-		CellState currentSymbol;
-        if (crossTurn) { currentSymbol = CellState.cross; }
-		else { currentSymbol = CellState.nought; }
+		int cellValue = -1;
+        if (crossTurn) { cellValue = Mathf.Abs(cellValue); }
 
 		int index = ((int)gridPos.y * 3) + (int)gridPos.x;
-		grid[index] = currentSymbol;
-		//print(gridPos + " / grid[" + index + "] is a " + currentSymbol);
+		grid[index] = cellValue;
+		//print(gridPos + " / grid[" + index + "] is " + cellValue);
     }
 
 	public void SwitchTurn()
@@ -44,21 +42,35 @@ public class GameManager : MonoBehaviour {
 
 	public void WinCheck()
     {
-		// currently only checks horizontally for a win
-		// NEEDS fixing and more efficiency
-		for (int index = 0; index < grid.Length - 2; index += 3)
+		int sum = 0;
+
+		// vertical check
+		for (int remainder = 0; remainder <= 2; remainder++)
         {
-			if (grid[index] == grid[index + 1] && grid[index] == grid[index + 2])
-			{
-				if (grid[index] == CellState.cross)
+			for (int index = 0; index < 8; index++)
+            {
+				if (index % 3 == remainder)
                 {
-					print("cross wins!");
+					sum += grid[index];
                 }
-				else if (grid[index] == CellState.nought)
-				{
-					print("nought wins!");
-				}
             }
+			CheckSum(sum);
+			sum = 0;
         }
     }
+
+	void CheckSum(int sum)
+    {
+		switch (sum)
+		{
+			case 3:
+				crossScore++;
+				print("cross wins: " + sum);
+				break;
+			case -3:
+				noughtScore++;
+				print("nought wins: " + sum);
+				break;
+		}
+	}
 }
