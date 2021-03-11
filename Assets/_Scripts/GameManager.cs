@@ -54,12 +54,14 @@ public class GameManager : MonoBehaviour {
 					sum += grid[index];
                 }
             }
-			CheckSum(sum);
+			if (PlayerWins(sum)) { return; }
 			sum = 0;
         }
+
+		// horizontal check
     }
 
-	void CheckSum(int sum)
+	bool PlayerWins(int sum)
     {
 		switch (sum)
 		{
@@ -71,6 +73,9 @@ public class GameManager : MonoBehaviour {
 				noughtScore++;
 				print("nought wins: " + sum);
 				break;
+			default:
+				return false;
 		}
+		return true;
 	}
 }
