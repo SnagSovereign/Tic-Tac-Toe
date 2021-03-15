@@ -34,7 +34,12 @@ public class Spawner : MonoBehaviour
         if (GameManager.crossTurn) { symbol = "cross"; }
         else { symbol = "nought"; }
 
-        Instantiate(Resources.Load<GameObject>(symbol), new Vector3(gridPos.x, gridPos.y, -0.5f), transform.rotation);
+        //Instantiate a new tile that corresponds to the player turn, and gridPos of the click
+        GameObject newTile = Instantiate(Resources.Load<GameObject>(symbol),
+                             new Vector3(gridPos.x, gridPos.y, -0.5f), transform.rotation);
+
+        newTile.transform.parent = transform; //Set the new tile as a child of this GameObject
+
         GM.UpdateCell(gridPos);
         GM.WinCheck();
         GM.SwitchTurn();
