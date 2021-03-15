@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour {
 		// vertical check
 		for (int remainder = 0; remainder <= 2; remainder++)
         {
-			for (int index = 0; index < 8; index++)
+			for (int index = 0; index <= 8; index++)
             {
 				if (index % 3 == remainder)
                 {
@@ -59,6 +59,19 @@ public class GameManager : MonoBehaviour {
         }
 
 		// horizontal check
+		for(int maxIndex = 2; maxIndex <= 8; maxIndex += 3)
+        {
+			for (int index = 0; index <= 8; index++)
+			{
+				if (index >= maxIndex - 3 && index <= maxIndex)
+				{
+					sum += grid[index];
+				}
+			}
+			if (PlayerWins(sum)) { return; }
+			sum = 0;
+		}
+
     }
 
 	bool PlayerWins(int sum)
