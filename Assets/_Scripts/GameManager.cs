@@ -30,7 +30,6 @@ public class GameManager : MonoBehaviour {
 
 		int index = ((int)gridPos.y * 3) + (int)gridPos.x;
 		grid[index] = cellValue;
-		//print(gridPos + " / grid[" + index + "] is " + cellValue);
     }
 
 	public void SwitchTurn()
@@ -54,7 +53,7 @@ public class GameManager : MonoBehaviour {
 					sum += grid[index];
                 }
             }
-			if (PlayerWins(sum)) { return; }
+			if (PlayerWins(sum)) { return; } //if a win is detected: exit the method
 			sum = 0;
         }
 
@@ -68,11 +67,16 @@ public class GameManager : MonoBehaviour {
 					sum += grid[index];
 				}
 			}
-			if (PlayerWins(sum)) { return; }
+			if (PlayerWins(sum)) { return; } //if a win is detected: exit the method
 			sum = 0;
 		}
 
-    }
+		// diagonal check
+		sum = grid[0] + grid[4] + grid[8]; //add up the grid values from bottom left to top right
+		if (PlayerWins(sum)) { return; } //if a win is detected: exit the method
+		sum = grid[2] + grid[4] + grid[6]; //add up the grid values from bottom right to top left
+		PlayerWins(sum);
+	}
 
 	bool PlayerWins(int sum)
     {
