@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour {
 					sum += grid[index];
                 }
             }
-			if (PlayerWins(sum)) { return; } //if a win is detected: exit the method
+			if (CheckSum(sum)) { return; } //if a win is detected: exit the method
 			sum = 0;
         }
 
@@ -67,18 +67,18 @@ public class GameManager : MonoBehaviour {
 					sum += grid[index];
 				}
 			}
-			if (PlayerWins(sum)) { return; } //if a win is detected: exit the method
+			if (CheckSum(sum)) { return; } //if a win is detected: exit the method
 			sum = 0;
 		}
 
 		// diagonal check
 		sum = grid[0] + grid[4] + grid[8]; //add up the grid values from bottom left to top right
-		if (PlayerWins(sum)) { return; } //if a win is detected: exit the method
+		if (CheckSum(sum)) { return; } //if a win is detected: exit the method
 		sum = grid[2] + grid[4] + grid[6]; //add up the grid values from bottom right to top left
-		PlayerWins(sum);
+		CheckSum(sum);
 	}
 
-	bool PlayerWins(int sum)
+	bool CheckSum(int sum)
     {
 		switch (sum)
 		{
